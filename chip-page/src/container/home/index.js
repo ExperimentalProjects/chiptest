@@ -2,16 +2,43 @@ import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite'
 import { COLORS } from '../../utils/config';
 import Header from './header';
+import './animate.css'
 
 import activeImg from '../../asset/chip_active_img.png'
+import doneImg from '../../asset/chip_done_img.png'
+
+const animateDuration = 1000;
 
 class Home extends Component {
+    animatedStyle = `${css(styles.leftImage)} css-animate-img`
+    normalStyle = css(styles.leftImage)
+    timeout = undefined;
+    state = {
+        isActive: false,
+        leftImageStyle: this.normalStyle
+    }
+
+    _toggle = () => {
+        if (this.timeout) {
+            return;
+        }
+        this.setState({ isActive: !this.state.isActive, leftImageStyle: this.animatedStyle })
+        this.timeout = setTimeout(this._resetStyle, animateDuration)
+    }
+
+    _resetStyle = () => {
+        this.setState({ leftImageStyle: this.normalStyle }, () => this.timeout = undefined)
+    }
+
     render() {
+        const leftImageSrc = this.state.isActive ? activeImg : doneImg;
         return (
             <div className={css(styles.container)}>
                 <Header />
                 <div className={css(styles.content)}>
-                    <div className={css(styles.leftContent)}><img src={activeImg} /></div>
+                    <div className={css(styles.leftContent)}>
+                        <img className={this.state.leftImageStyle} src={leftImageSrc} />
+                    </div>
                     <div className={css(styles.rightContent)}>
                         <div className={css(styles.row)}>
                             <LineComponent />
@@ -19,7 +46,7 @@ class Home extends Component {
                         </div>
                         <h1 className={css(styles.biggestText)}>Goal<br />Boost</h1>
                         <p className={css(styles.allText)}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        <button className={css(styles.button)}>BOOST</button>
+                        <button className={css(styles.button)} onClick={this._toggle}>BOOST</button>
                     </div>
                     <div className={css(styles.verticalIndication)}>
                         <span className={css(styles.linText)} style={{ paddingRight: 15 }}>PAYDAY ADVANCE</span>
@@ -66,6 +93,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingRight: 50
     },
+    leftImage: {
+        width: 400,
+        height: 500
+    },
     rightContent: {
         paddingLeft: 50,
         display: "flex",
@@ -107,7 +138,8 @@ const styles = StyleSheet.create({
         color: COLORS.WHITE,
         fontSize: 16,
         fontWeight: 400,
-        backgroundColor: COLORS.OFF_BLACK
+        backgroundColor: COLORS.OFF_BLACK,
+        outline: 'none'
     },
     verticalIndication: {
         position: 'fixed',
