@@ -1,5 +1,6 @@
 
 export const CHIP_ICON_SIZE = 70
+export const CHIP_ICON_SIZE_MOBILE = 40
 
 
 export const COLORS = {

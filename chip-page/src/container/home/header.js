@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite'
 import chipIcon from '../../asset/chip-icon.png'
-import { CHIP_ICON_SIZE, COLORS } from '../../utils/config';
+import { CHIP_ICON_SIZE, COLORS, CHIP_ICON_SIZE_MOBILE } from '../../utils/config';
 
 
 const Header = (props) => {
@@ -27,9 +27,16 @@ const styles = StyleSheet.create({
     header: {
         display: 'flex',
         width: '94%',
-        textAlign: 'center',
+        padding: "3%",
         justifyContent: 'space-between',
-        padding: "3%"
+        "@media (max-width: 700px)": {
+            flexDirection: "column",
+            alignItems: 'flex-start'
+        },
+        "@media (min-width: 700px)": {
+            flexDirection: "row",
+            textAlign: 'center',
+        }
     },
     leftContainer: {
         display: 'flex',
@@ -38,8 +45,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     mainIcon: {
-        width: CHIP_ICON_SIZE,
-        height: CHIP_ICON_SIZE
+        "@media (max-width: 700px)": {
+            width: CHIP_ICON_SIZE_MOBILE,
+            height: CHIP_ICON_SIZE_MOBILE
+        },
+        "@media (min-width: 700px)": {
+            width: CHIP_ICON_SIZE,
+            height: CHIP_ICON_SIZE
+        }
     },
     headeTextContainer: {
         display: 'flex',
@@ -51,8 +64,13 @@ const styles = StyleSheet.create({
     headerText: {
         color: COLORS.WHITE,
         fontWeight: 600,
-        fontSize: 35,
-        margin: 0
+        margin: 0,
+        "@media (max-width: 700px)": {
+            fontSize: 20,
+        },
+        "@media (min-width: 700px)": {
+            fontSize: 35,
+        }
     },
     tagline: {
         color: COLORS.BLUE,
@@ -72,6 +90,9 @@ const styles = StyleSheet.create({
     },
     rightContainer: {
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        "@media (max-width: 700px)": {
+            marginTop: 10
+        },
     }
 })
