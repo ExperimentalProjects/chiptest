@@ -15,7 +15,7 @@ const Header = (props) => {
                 </div>
             </div>
             <div className={css(styles.rightContainer)}>
-                <button className={css(styles.button)}> REQUEST ACCESS</button>
+                <button className={css(styles.button)} onClick={props.onPress}> REQUEST ACCESS</button>
             </div>
         </div>
     )
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
         color: COLORS.WHITE,
         fontSize: 16,
         fontWeight: 400,
-        backgroundColor: COLORS.OFF_BLACK
+        backgroundColor: COLORS.OFF_BLACK,
+        outline: 'none'
     },
     rightContainer: {
         display: 'flex',

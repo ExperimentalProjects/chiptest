@@ -29,7 +29,8 @@ class Home extends Component {
             return;
         }
         let nextEllipsStyle = this.state.isActive ? this.animatedEllipseStyle : this.normalEllipseStyle;
-        this.setState({ isActive: !this.state.isActive, leftImageStyle: this.animatedStyle, ellipseStyle: nextEllipsStyle })
+        this.setState({ leftImageStyle: this.animatedStyle, ellipseStyle: nextEllipsStyle })
+        setTimeout(() => this.setState({ isActive: !this.state.isActive }), animateDuration * 0.4);
         this.timeout = setTimeout(this._resetStyle, animateDuration)
     }
 
@@ -38,7 +39,7 @@ class Home extends Component {
     }
 
     _ellipsInlineStyle = (index) => {
-        const unit = window.innerHeight < 700 ? 5 : 10;
+        const unit = window.innerHeight < 700 ? 7 : 10;
         switch (index) {
             case 1:
                 return { position: 'relative', left: unit, top: -unit }
@@ -61,7 +62,7 @@ class Home extends Component {
         const leftImageSrc = this.state.isActive ? activeImg : doneImg;
         return (
             <div className={css(styles.container)}>
-                <Header />
+                <Header onPress={this._toggle} />
                 <div className={css(styles.content)}>
                     <div className={css(styles.leftContent)}>
                         <div className={this.state.ellipseStyle}>
@@ -146,17 +147,20 @@ const styles = StyleSheet.create({
         }
     },
     ellipsContainer: {
-        width: 400,
-        height: 500,
         position: 'absolute',
         zIndex: 9,
         "@media (max-width: 700px)": {
-            top: '25%',
+            top: '32%',
             left: '0%',
+            width: 300,
+            height: 400,
+            marginLeft: "-10%"
         },
         "@media (min-width: 700px)": {
             top: '30%',
             left: '10%',
+            width: 400,
+            height: 500,
         },
     },
     leftImage: {
